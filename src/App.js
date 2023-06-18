@@ -9,7 +9,7 @@ function App () {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getBooks();
-      setBooks(data.items);
+      setBooks(data);
     };
 
     fetchData();
