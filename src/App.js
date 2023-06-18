@@ -5,6 +5,7 @@ import { getBooks } from './services/api/api';
 
 function App () {
   const [books, setBooks] = useState([]);
+  const [editBook, setEditBook] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,7 +17,7 @@ function App () {
   }, []);
 
   return (
-    <ThemeContext.Provider value={{ books, setBooks }}>
+    <ThemeContext.Provider value={{ books, setBooks, editBook, setEditBook }}>
       <Routes />
     </ThemeContext.Provider>
   );

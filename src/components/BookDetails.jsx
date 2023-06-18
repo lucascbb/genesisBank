@@ -2,11 +2,17 @@ import React, { useContext, useEffect, useState } from 'react';
 import ThemeContext from '../context/ThemeContext';
 
 function BookDetails () {
-  const { books, setBooks } = useContext(ThemeContext);
+  const { books, setBooks, setEditBook } = useContext(ThemeContext);
 
   const removeBook = (title, author) => {
-    const booksFiltrados = books.filter((ele) => ele.volumeInfo.title !== title && ele.volumeInfo.authors !== author);
+    const booksFiltrados = books.filter((ele) => ele.volumeInfo.title !== title &&
+      ele.volumeInfo.authors !== author);
+
     setBooks(booksFiltrados);
+  };
+
+  const editBook = (title, author, img, description) => {
+    setEditBook([title, author, img, description]);
   };
 
   return (
@@ -15,6 +21,9 @@ function BookDetails () {
         <div key={i}>
           <button onClick={ () => removeBook(book.volumeInfo.title, book.volumeInfo.authors) } >
             Remover
+          </button>
+          <button onClick={ () => editBook(book.volumeInfo.title, book.volumeInfo.authors, book.volumeInfo.imageLinks.thumbnail, book.volumeInfo.description) } >
+            Editar
           </button>
           <img
             alt={`Imagem do livro: ${book.volumeInfo.title}`}

@@ -3,17 +3,21 @@ import ThemeContext from '../context/ThemeContext';
 import BookDetails from './BookDetails';
 
 function BookForm () {
-  const { books, setBooks } = useContext(ThemeContext);
+  const { books, setBooks, editBook } = useContext(ThemeContext);
   const [titulo, setTitulo] = useState('');
   const [autor, setAutor] = useState('');
   const [descricao, setDescricao] = useState('');
   const [urlImg, setUrlImg] = useState('');
   const [existingBook, setExistingBook] = useState(false);
+  const [editingBook, setEditingBook] = useState(false);
 
   const addBook = () => {
     const existingBook = books.filter((exist) => exist.volumeInfo.title === titulo);
 
-    if (existingBook.length > 0) {
+    const booksFiltrados = books.filter((ele) => ele.volumeInfo.title !== titulo &&
+      ele.volumeInfo.authors !== autor);
+
+    if (existingBook.length > 0 && !editingBook) {
       return setExistingBook(true);
     }
 
@@ -28,7 +32,9 @@ function BookForm () {
       }
     };
 
+    setBooks(booksFiltrados);
     setBooks(prevBooks => [data, ...prevBooks]);
+    setEditingBook(false);
     setTitulo('');
     setAutor('');
     setDescricao('');
@@ -52,6 +58,16 @@ function BookForm () {
     }
   };
 
+  useEffect(() => {
+    if (editBook.length > 0) {
+      setEditingBook(true);
+      setTitulo(editBook[0]);
+      setAutor(editBook[1]);
+      setUrlImg(editBook[2]);
+      setDescricao(editBook[3]);
+    }
+  }, [editBook]);
+
   return (
     <div>
       <div>
@@ -70,7 +86,8 @@ function BookForm () {
             value={titulo}
             onChange={handleChange}
           />
-          {(titulo.length < 3 && titulo !== '') && <p>O título deve ter pelo menos 3 caracteres.</p>}
+          {(titulo.length < 3 && titulo !== '' && !editBook) &&
+            <p>O título deve ter pelo menos 3 caracteres.</p>}
         </div>
         <div>
           <label htmlFor="author">
@@ -84,7 +101,8 @@ function BookForm () {
             value={autor}
             onChange={handleChange}
           />
-          {(autor.length < 2 && autor !== '') && <p>O nome do autor ou autora deve ter pelo menos 2 caracteres.</p>}
+          {(autor.length < 2 && autor !== '' && !editBook) &&
+           <p>O nome do autor ou autora deve ter pelo menos 2 caracteres.</p>}
         </div>
         <div>
           <label htmlFor="author">
@@ -111,11 +129,11 @@ function BookForm () {
             value={descricao}
             onChange={handleChange}
           />
-          {(descricao.length < 12 && descricao !== '') && <p>A descricao deve ter pelo menos 12 caracteres.</p>}
+          {(descricao.length < 12 && descricao !== '') && <p>A descrição deve ter pelo menos 12 caracteres.</p>}
         </div>
         <button
           type="button"
-          disabled={!(autor.length >= 2 && titulo.length >= 3 && descricao.length >= 12)}
+          disabled={!((autor.length >= 2 && titulo.length >= 3 && descricao.length >= 12) || editingBook)}
           onClick={ addBook }
         >
           Adicionar Livro
