@@ -16,9 +16,9 @@ function BookDetails () {
   };
 
   return (
-    <div>
+    <ol>
       {books && books.map((book, i) => (
-        <div key={i}>
+        <li key={i}>
           <button onClick={ () => removeBook(book.volumeInfo.title, book.volumeInfo.authors) } >
             Remover
           </button>
@@ -31,10 +31,10 @@ function BookDetails () {
           />
           <h4>{book.volumeInfo.title}</h4>
           <p>{book.volumeInfo.authors.map((name) => `${name}, `).join('').slice(0, -2)}</p>
-          <p>{book.volumeInfo.description}</p>
-        </div>
+          {/* <p>{book.volumeInfo.description}</p> */}
+        </li>
       ))}
-    </div>
+    </ol>
   );
 }
 
