@@ -74,7 +74,7 @@ function BookForm () {
           <input
             type="text"
             id="title"
-            // placeholder="O Pequeno Príncipe"
+            placeholder="O Pequeno Príncipe"
             name="title"
             value={newBook.title}
             onChange={ handleChange }
@@ -90,7 +90,7 @@ function BookForm () {
           <input
             type="text"
             id="author"
-            // placeholder="Antoine De Saint-Exupéry"
+            placeholder="Antoine De Saint-Exupéry"
             name="author"
             value={newBook.author}
             onChange={ handleChange }
@@ -106,7 +106,7 @@ function BookForm () {
           <input
             type="text"
             id="image"
-            // placeholder="https://images.tcdn.com.br/img/img_prod/850317/pequeno_principe_o_2329_1_6917d4e12c4129c862834e02ec9dce37.jpg"
+            placeholder="https://images.tcdn.com.br/img/img_prod/850317/pequeno_principe_o_2329_1_6917d4e12c4129c862834e02ec9dce37.jpg"
             name="image"
             value={newBook.image}
             onChange={ handleChange }
@@ -119,7 +119,7 @@ function BookForm () {
           </label>
           <textarea
             id="description"
-            // placeholder="Uma história maravilhosa e profunda, para todas as idades, e ilustrada pelo próprio autor."
+            placeholder="Uma história maravilhosa e profunda, para todas as idades, e ilustrada pelo próprio autor."
             name="description"
             value={newBook.description}
             onChange={ handleChange }
