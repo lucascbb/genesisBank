@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import ThemeContext from '../context/ThemeContext';
 import BookDetails from './BookDetails';
 
@@ -22,6 +22,10 @@ function BookForm () {
     };
 
     setBooks(prevBooks => [...prevBooks, data]);
+    setTitulo('');
+    setAutor('');
+    setDescricao('');
+    setUrlImg('');
   };
 
   const handleChange = (e) => {
