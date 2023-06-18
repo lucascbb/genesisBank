@@ -1,13 +1,10 @@
-import React, { useContext } from 'react';
-import ThemeContext from '../context/ThemeContext';
+import React from 'react';
+import BookList from '../components/BookList';
 
 function Home () {
-  const { books } = useContext(ThemeContext);
-  console.log(books);
-
   return (
     <div>
-      <h1>Home</h1>
+      <BookList />
     </div>
   );
 }
