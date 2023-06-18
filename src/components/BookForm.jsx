@@ -7,6 +7,7 @@ function BookForm () {
   const [titulo, setTitulo] = useState('');
   const [autor, setAutor] = useState('');
   const [descricao, setDescricao] = useState('');
+  const [botaoAdd, setBotaoAdd] = useState(false);
 
   const handleClick = () => {
     const data = {
@@ -29,7 +30,7 @@ function BookForm () {
       setTitulo(value);
     } else if (name === 'autor') {
       setAutor(value);
-    } else {
+    } else if (name === 'descricao') {
       setDescricao(value);
     }
   };
@@ -46,6 +47,7 @@ function BookForm () {
             value={titulo}
             onChange={handleChange}
           />
+          {(titulo.length < 3 && titulo !== '') && <p>O título deve ter pelo menos 3 caracteres.</p>}
         </div>
         <div>
           <label htmlFor="author">Autor:</label>
@@ -56,6 +58,7 @@ function BookForm () {
             value={autor}
             onChange={handleChange}
           />
+          {(autor.length < 2 && autor !== '') && <p>O nome do autor ou autora deve ter pelo menos 2 caracteres.</p>}
         </div>
         <div>
           <label htmlFor="description">Descrição:</label>
@@ -66,8 +69,15 @@ function BookForm () {
             value={descricao}
             onChange={handleChange}
           />
+          {(descricao.length < 12 && descricao !== '') && <p>A descricao deve ter pelo menos 12 caracteres.</p>}
         </div>
-        <button type="button" onClick={ handleClick }>Adicionar Livro</button>
+        <button
+          type="button"
+          disabled={!(autor.length >= 2 && titulo.length >= 3 && descricao.length >= 12)}
+          onClick={ handleClick }
+        >
+          Adicionar Livro
+        </button>
       </form>
       <BookDetails
         newTitulo={ titulo }

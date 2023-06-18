@@ -3,14 +3,14 @@ import ThemeContext from '../context/ThemeContext';
 
 function BookDetails ({ newTitulo, newAutor, newDescricao, addNewBook }) {
   const { books } = useContext(ThemeContext);
-  console.log(books);
+  // console.log(books);
 
   return (
     <div>
-      {books && books.map((book) => (
-        <div key={book.id}>
+      {books && books.map((book, i) => (
+        <div key={i}>
           <img
-            alt={`Imagem do ${book.volumeInfo.title}`}
+            alt={`Imagem do livro: ${book.volumeInfo.title}`}
             src={book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.thumbnail}
           />
           <h4>{book.volumeInfo.title}</h4>
