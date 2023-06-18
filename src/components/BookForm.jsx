@@ -7,7 +7,7 @@ function BookForm () {
   const [titulo, setTitulo] = useState('');
   const [autor, setAutor] = useState('');
   const [descricao, setDescricao] = useState('');
-  const [botaoAdd, setBotaoAdd] = useState(false);
+  const [urlImg, setUrlImg] = useState('');
 
   const handleClick = () => {
     const data = {
@@ -16,7 +16,7 @@ function BookForm () {
         authors: [autor],
         description: descricao,
         imageLinks: {
-          thumbnail: ''
+          thumbnail: urlImg
         }
       }
     };
@@ -32,6 +32,8 @@ function BookForm () {
       setAutor(value);
     } else if (name === 'descricao') {
       setDescricao(value);
+    } else if (name === 'imagem') {
+      setUrlImg(value);
     }
   };
 
@@ -39,7 +41,10 @@ function BookForm () {
     <div>
       <form>
         <div>
-          <label htmlFor="title">Título:</label>
+          <label htmlFor="title">
+            Título
+            <span>*</span>
+          </label>
           <input
             type="text"
             id="title"
@@ -50,7 +55,10 @@ function BookForm () {
           {(titulo.length < 3 && titulo !== '') && <p>O título deve ter pelo menos 3 caracteres.</p>}
         </div>
         <div>
-          <label htmlFor="author">Autor:</label>
+          <label htmlFor="author">
+            Autor
+            <span>*</span>
+          </label>
           <input
             type="text"
             id="author"
@@ -61,7 +69,23 @@ function BookForm () {
           {(autor.length < 2 && autor !== '') && <p>O nome do autor ou autora deve ter pelo menos 2 caracteres.</p>}
         </div>
         <div>
-          <label htmlFor="description">Descrição:</label>
+          <label htmlFor="author">
+            Link da Imagem
+            <i>Opcional</i>
+          </label>
+          <input
+            type="text"
+            id="imagem"
+            name="imagem"
+            value={urlImg}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="description">
+            Descrição
+            <span>*</span>
+          </label>
           <textarea
             type="text"
             id="description"
