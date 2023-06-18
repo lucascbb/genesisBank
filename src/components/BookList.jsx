@@ -7,7 +7,6 @@ function BookList () {
     <div>
       <h1>Lista de Livros</h1>
       <BookForm />
-      <BookItem />
     </div>
   );
 }

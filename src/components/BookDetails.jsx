@@ -1,12 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ThemeContext from '../context/ThemeContext';
 
-function BookDetails () {
+function BookDetails ({ newTitulo, newAutor, newDescricao, addNewBook }) {
   const { books } = useContext(ThemeContext);
-  // console.log(books.items && books.items[9].volumeInfo.description);
+  console.log(books);
+
   return (
     <div>
-      {books.items && books.items.map((book) => (
+      {books && books.map((book) => (
         <div key={book.id}>
           <img
             alt={`Imagem do ${book.volumeInfo.title}`}

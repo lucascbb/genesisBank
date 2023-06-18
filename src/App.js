@@ -9,14 +9,14 @@ function App () {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getBooks();
-      setBooks(data);
+      setBooks(data.items);
     };
 
     fetchData();
   }, []);
 
   return (
-    <ThemeContext.Provider value={{ books }}>
+    <ThemeContext.Provider value={{ books, setBooks }}>
       <Routes />
     </ThemeContext.Provider>
   );
