@@ -3,7 +3,7 @@ import ThemeContext from '../context/ThemeContext';
 
 function BookDetails () {
   const { books } = useContext(ThemeContext);
-  console.log(books.items && books.items[9].volumeInfo.description);
+  // console.log(books.items && books.items[9].volumeInfo.description);
   return (
     <div>
       {books.items && books.items.map((book) => (
