@@ -4,69 +4,61 @@ import BookDetails from './BookDetails';
 
 function BookForm () {
   const { books, setBooks, editBook } = useContext(ThemeContext);
-  const [titulo, setTitulo] = useState('');
-  const [autor, setAutor] = useState('');
-  const [descricao, setDescricao] = useState('');
-  const [urlImg, setUrlImg] = useState('');
+  const [newBook, setNewBook] = useState({ title: '', author: '', description: '', image: '' });
   const [existingBook, setExistingBook] = useState(false);
-  const [editingBook, setEditingBook] = useState(false);
+  const [editingBook, setEditingBook] = useState(true);
 
   const addBook = () => {
-    const existingBook = books.filter((exist) => exist.volumeInfo.title === titulo);
+    const duplicate = books.filter((exist) => exist.volumeInfo.title === newBook.title);
+    if (duplicate.length > 0 && editingBook) { return setExistingBook(true); }
 
-    const booksFiltrados = books.filter((ele) => ele.volumeInfo.title !== titulo &&
-      ele.volumeInfo.authors !== autor);
-
-    if (existingBook.length > 0 && !editingBook) {
-      return setExistingBook(true);
-    }
+    const booksFiltrados = books.filter((ele) => ele.volumeInfo.title !== editBook[0] &&
+      ele.volumeInfo.authors[0] !== editBook[1]
+    );
 
     const data = {
       volumeInfo: {
-        title: titulo,
-        authors: [autor],
-        description: descricao,
+        title: newBook.title,
+        authors: [newBook.author],
+        description: newBook.description,
         imageLinks: {
-          thumbnail: urlImg
+          thumbnail: newBook.image
         }
       }
     };
 
     setBooks(booksFiltrados);
-    setBooks(prevBooks => [data, ...prevBooks]);
-    setEditingBook(false);
-    setTitulo('');
-    setAutor('');
-    setDescricao('');
-    setUrlImg('');
+    setBooks((prevBooks) => [data, ...prevBooks]);
+    setEditingBook(true);
+    setNewBook({
+      title: '',
+      author: '',
+      description: '',
+      image: ''
+    });
   };
 
   useEffect(() => {
     setExistingBook(false);
-  }, [titulo]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (name === 'titulo') {
-      setTitulo(value);
-    } else if (name === 'autor') {
-      setAutor(value);
-    } else if (name === 'descricao') {
-      setDescricao(value);
-    } else if (name === 'imagem') {
-      setUrlImg(value);
-    }
-  };
+  }, [newBook.title]);
 
   useEffect(() => {
     if (editBook.length > 0) {
-      setEditingBook(true);
-      setTitulo(editBook[0]);
-      setAutor(editBook[1]);
-      setUrlImg(editBook[2]);
-      setDescricao(editBook[3]);
-    }
+      setEditingBook(false);
+      setNewBook({
+        title: editBook[0],
+        author: editBook[1].join(', '),
+        description: editBook[3],
+        image: editBook[2]
+      });
+    } console.log(newBook.author);
   }, [editBook]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewBook((prevBook) => ({ ...prevBook, [name]: value }));
+    console.log(newBook.author);
+  };
 
   return (
     <div>
@@ -82,39 +74,42 @@ function BookForm () {
           <input
             type="text"
             id="title"
-            name="titulo"
-            value={titulo}
-            onChange={handleChange}
+            placeholder="O Pequeno Príncipe"
+            name="title"
+            value={newBook.title}
+            onChange={ handleChange }
           />
-          {(titulo.length < 3 && titulo !== '' && !editBook) &&
-            <p>O título deve ter pelo menos 3 caracteres.</p>}
+          {newBook.title.length < 3 && newBook.title !== '' && (
+            <p>O título deve ter pelo menos 3 caracteres.</p>
+          )}
         </div>
         <div>
           <label htmlFor="author">
-            Autor
-            <span>*</span>
+            Autor<span>*</span>
           </label>
           <input
             type="text"
             id="author"
-            name="autor"
-            value={autor}
-            onChange={handleChange}
+            placeholder="Antoine De Saint-Exupéry"
+            name="author"
+            value={newBook.author}
+            onChange={ handleChange }
           />
-          {(autor.length < 2 && autor !== '' && !editBook) &&
-           <p>O nome do autor ou autora deve ter pelo menos 2 caracteres.</p>}
+          {newBook.author.length < 3 && newBook.author !== '' && (
+            <p>O nome do autor ou autora deve ter pelo menos 3 caracteres.</p>
+          )}
         </div>
         <div>
-          <label htmlFor="author">
-            Link da Imagem
-            <i>Opcional</i>
+          <label htmlFor="image">
+            Link da Imagem<i>Opcional</i>
           </label>
           <input
             type="text"
-            id="imagem"
-            name="imagem"
-            value={urlImg}
-            onChange={handleChange}
+            id="image"
+            placeholder="https://images.tcdn.com.br/img/img_prod/850317/pequeno_principe_o_2329_1_6917d4e12c4129c862834e02ec9dce37.jpg"
+            name="image"
+            value={newBook.image}
+            onChange={ handleChange }
           />
         </div>
         <div>
@@ -123,17 +118,19 @@ function BookForm () {
             <span>*</span>
           </label>
           <textarea
-            type="text"
             id="description"
-            name="descricao"
-            value={descricao}
-            onChange={handleChange}
+            placeholder="Uma história maravilhosa e profunda, para todas as idades, e ilustrada pelo próprio autor."
+            name="description"
+            value={newBook.description}
+            onChange={ handleChange }
           />
-          {(descricao.length < 12 && descricao !== '') && <p>A descrição deve ter pelo menos 12 caracteres.</p>}
+          {newBook.description.length < 3 && newBook.description !== '' && (
+            <p>A descrição deve ter pelo menos 3 caracteres.</p>
+          )}
         </div>
         <button
           type="button"
-          disabled={!((autor.length >= 2 && titulo.length >= 3 && descricao.length >= 12) || editingBook)}
+          disabled={ newBook.title.length < 3 || newBook.description.length < 3 }
           onClick={ addBook }
         >
           Adicionar Livro
