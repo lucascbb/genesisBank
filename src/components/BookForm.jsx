@@ -1,15 +1,22 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import ThemeContext from '../context/ThemeContext';
 import BookDetails from './BookDetails';
 
 function BookForm () {
-  const { setBooks } = useContext(ThemeContext);
+  const { books, setBooks } = useContext(ThemeContext);
   const [titulo, setTitulo] = useState('');
   const [autor, setAutor] = useState('');
   const [descricao, setDescricao] = useState('');
   const [urlImg, setUrlImg] = useState('');
+  const [existingBook, setExistingBook] = useState(false);
 
-  const handleClick = () => {
+  const addBook = () => {
+    const existingBook = books.filter((exist) => exist.volumeInfo.title === titulo);
+
+    if (existingBook.length > 0) {
+      return setExistingBook(true);
+    }
+
     const data = {
       volumeInfo: {
         title: titulo,
@@ -21,12 +28,16 @@ function BookForm () {
       }
     };
 
-    setBooks(prevBooks => [...prevBooks, data]);
+    setBooks(prevBooks => [data, ...prevBooks]);
     setTitulo('');
     setAutor('');
     setDescricao('');
     setUrlImg('');
   };
+
+  useEffect(() => {
+    setExistingBook(false);
+  }, [titulo]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,6 +54,9 @@ function BookForm () {
 
   return (
     <div>
+      <div>
+        {existingBook && <p>Esse título já está cadastrado!</p>}
+      </div>
       <form>
         <div>
           <label htmlFor="title">
@@ -102,17 +116,12 @@ function BookForm () {
         <button
           type="button"
           disabled={!(autor.length >= 2 && titulo.length >= 3 && descricao.length >= 12)}
-          onClick={ handleClick }
+          onClick={ addBook }
         >
           Adicionar Livro
         </button>
       </form>
-      <BookDetails
-        newTitulo={ titulo }
-        newAutor={ autor }
-        newDescricao={ descricao }
-        addNewBook={ handleClick }
-      />
+      <BookDetails />
     </div>
   );
 }
