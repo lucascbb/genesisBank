@@ -31,7 +31,7 @@ function BookDetails () {
           />
           <h4>{book.volumeInfo.title}</h4>
           <p>{book.volumeInfo.authors.map((name) => `${name}, `).join('').slice(0, -2)}</p>
-          {/* <p>{book.volumeInfo.description}</p> */}
+          <p>{book.volumeInfo.description}</p>
         </li>
       ))}
     </ol>
