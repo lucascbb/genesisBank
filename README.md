@@ -5,7 +5,7 @@
 
 Este projeto foi desenvolvido como parte de um teste técnico para a vaga de Desenvolvedor React Jr. na Genesis Bank. A aplicação consiste em uma lista de livros, onde os usuários podem adicionar, visualizar detalhes, editar e remover livros da lista. Além disso, foi utilizada uma API de livros para enriquecer a aplicação com dados reais.
 
-<img src='./src/images/genesis.png' height="300px" /> <img src='./src/images/notebook.gif' width="600px" >
+<img src='./src/images/genesis.png' height="290px" /> <img src='./src/images/notebook.gif' width="600px" >
 
 ### Requisitos
 A aplicação atende aos seguintes requisitos:
