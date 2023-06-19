@@ -3,6 +3,7 @@ import ThemeContext from '../context/ThemeContext';
 import BookDetails from './BookDetails';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import semCapa from '../images/semCapa.png';
 
 function BookForm () {
   const { books, setBooks, editBook } = useContext(ThemeContext);
@@ -35,7 +36,7 @@ function BookForm () {
         authors: [newBook.author],
         description: newBook.description,
         imageLinks: {
-          thumbnail: newBook.image === '' ? 'http://books.google.com/books/content?id=CSj5DwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api' : newBook.image
+          thumbnail: newBook.image === '' ? semCapa : newBook.image
         }
       }
     };

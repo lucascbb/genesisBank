@@ -76,7 +76,7 @@ function BookDetails () {
                   <>
                     <p
                       style={{
-                        maxHeight: expandedBook === book ? '100%' : '90px',
+                        maxHeight: expandedBook === book ? '90%' : '110px',
                         background:
                           expandedBook === book
                             ? 'transparent'
