@@ -51,13 +51,12 @@ function BookForm () {
         description: editBook[3],
         image: editBook[2]
       });
-    } console.log(newBook.author);
+    }
   }, [editBook]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewBook((prevBook) => ({ ...prevBook, [name]: value }));
-    console.log(newBook.author);
   };
 
   return (
